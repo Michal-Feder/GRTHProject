@@ -8,3 +8,7 @@
  * Follow this format:
  * export const YOUR_ACTION_CONSTANT = 'yourproject/YourContainer/YOUR_ACTION_CONSTANT';
  */
+
+export const START_PRESENCE = 'GRTHProject/App/START_PRESENCE';
+export const END_PRESENCE = 'GRTHProject/App/END_PRESENCE';
+export const SET_NAME_PASSWORD = 'GRTHProject/APP/SET_NAME_PASSWORD'
