@@ -28,7 +28,6 @@ function List(props) {
               </tr>
             );
           })}
-
         </tbody>
       </Table>
 
