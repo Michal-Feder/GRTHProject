@@ -23,7 +23,7 @@ import Form from 'react-bootstrap/Form';
 export function Navigation({ onClickLogout }) {
   useInjectReducer({ key: 'navigation', reducer });
   useInjectSaga({ key: 'navigation', saga });
-  function clickLogin() {
+  const clickLogin = () => {
     history.push('/Login')
   }
   return (
