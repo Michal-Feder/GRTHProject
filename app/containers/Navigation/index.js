@@ -23,7 +23,9 @@ import Form from 'react-bootstrap/Form';
 export function Navigation({ onClickLogout }) {
   useInjectReducer({ key: 'navigation', reducer });
   useInjectSaga({ key: 'navigation', saga });
-
+  function clickLogin() {
+    history.push('/Login')
+  }
   return (
     <div>
       <Navbar bg="dark" variant="dark">
@@ -38,10 +40,9 @@ export function Navigation({ onClickLogout }) {
             <Link className="lnk lnk-nav" to="/AttendanceList">Attendance List</Link>
           </Nav>
           <Form inline>
-            <Button variant="outline-danger">
-              <Link className="lnk" to="/Login">Login</Link>
+            <Button onClick={clickLogin} variant="danger">Login
             </Button>
-            <Button onClick={() => onClickLogout()} variant="outline-danger">
+            <Button onClick={onClickLogout} variant="outline-danger">
               Logout
             </Button>
           </Form>
