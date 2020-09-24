@@ -12,6 +12,7 @@ import makeSelectLogin from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
+import { makeSelectAttendanceList } from '../App/selectors'
 
 import { setNamePassword } from './actions'
 import history from 'utils/history';
@@ -20,13 +21,21 @@ import history from 'utils/history';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
-export function Login({ onSubmit }) {
+export function Login({ onSubmit, AttendanceList }) {
   useInjectReducer({ key: 'login', reducer });
   useInjectSaga({ key: 'login', saga });
-
+  const [error, setError] = useState('');
   const [nameInput, setNameInput] = useState('');
   const [passwordInput, setPasswordInput] = useState('');
-
+  function handleSubmit(e) {
+    const user = AttendanceList.find(item => item.userName == nameInput && item.userPassword == passwordInput);
+    if (user == undefined)
+      onSubmit(e, nameInput, passwordInput);
+    else {
+      e.preventDefault();
+      setError('Username or password is incorrect');
+    }
+  }
   return (
     <div>
       <Helmet>
@@ -34,7 +43,7 @@ export function Login({ onSubmit }) {
         <meta name="description" content="Description of Login" />
       </Helmet>
       <div className="center">
-        <Form onSubmit={(e) => onSubmit(e, nameInput, passwordInput)}>
+        <Form onSubmit={(e) => handleSubmit(e)}>
           <Form.Group controlId="formBasicName">
             <Form.Label>Name</Form.Label>
             <Form.Control type="text" placeholder="Enter name" onChange={e => setNameInput(e.target.value)}
@@ -48,7 +57,7 @@ export function Login({ onSubmit }) {
             <Form.Control type="password" placeholder="Password" value={passwordInput} onChange={e => setPasswordInput(e.target.value)}
             />
           </Form.Group>
-
+          <p>{error}</p>
           <Button disabled={nameInput == '' || passwordInput == ''} variant="danger" type="submit">
             Submit
            </Button>
@@ -60,10 +69,11 @@ export function Login({ onSubmit }) {
 
 Login.propTypes = {
   onSubmit: PropTypes.func,
+  AttendanceList: PropTypes.any
 };
 
 const mapStateToProps = createStructuredSelector({
-  login: makeSelectLogin(),
+  AttendanceList: makeSelectAttendanceList(),
 });
 
 function mapDispatchToProps(dispatch) {

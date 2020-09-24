@@ -20,11 +20,11 @@ function List(props) {
         <tbody>
           {props.data.map((item, index) => {
             return (
-              <tr>
-                <td className="text-center" key={index}>{index}</td>
-                <td key={item.date}>{item.date}</td>
-                <td key={item.start}>{item.start}</td>
-                <td key={item.end}>{item.end}</td>
+              <tr key={index}>
+                <td className="text-center" >{index}</td>
+                <td>{item.date}</td>
+                <td>{item.start}</td>
+                <td>{item.end}</td>
               </tr>
             );
           })}

@@ -1,5 +1,5 @@
 import produce from 'immer';
-import { START_PRESENCE, END_PRESENCE, SET_NAME_PASSWORD } from './constants'
+import { START_PRESENCE, END_PRESENCE, SET_NAME_PASSWORD, RESET_NAME_PASSWORD } from './constants'
 
 export const initialState = {
     userName: '',
@@ -23,6 +23,11 @@ const appReducer = (state = initialState, action) =>
                 draft.error = false;
                 draft.userName = action.name;
                 draft.userPassword = action.password;
+                break;
+            case RESET_NAME_PASSWORD:
+                draft.error = false;
+                draft.userName = '';
+                draft.userPassword = '';
                 break;
         }
     });

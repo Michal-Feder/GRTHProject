@@ -1,6 +1,6 @@
 /**
  *
- * Asynchronously loads the component for NavBar
+ * Asynchronously loads the component for Navigation
  *
  */
 

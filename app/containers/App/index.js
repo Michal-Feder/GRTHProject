@@ -5,15 +5,15 @@ import HomePage from 'containers/HomePage/Loadable';
 import AttendanceRegistration from 'containers/AttendanceRegistration/Loadable'
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import Login from 'containers/Login/Loadable';
+import Navigation from 'containers/Navigation/Loadable';
 import AttendanceList from 'containers/AttendanceList/Loadable';
-import NavBar from 'components/NavBar';
 
 import 'style.scss';
 
 export default function App() {
   return (
     <div>
-      <NavBar />
+      <Navigation />
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route exact path="/AttendanceRegistration" component={AttendanceRegistration} />
