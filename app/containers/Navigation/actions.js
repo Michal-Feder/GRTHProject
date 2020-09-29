@@ -1,6 +1,0 @@
-/*
- *
- * Navigation actions
- *
- */
-

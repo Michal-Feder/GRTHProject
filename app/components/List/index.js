@@ -2,7 +2,7 @@
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 
-//Bootstrap
+// Bootstrap
 import Table from 'react-bootstrap/Table';
 
 function List(props) {
@@ -18,16 +18,14 @@ function List(props) {
           </tr>
         </thead>
         <tbody>
-          {props.data.map((item, index) => {
-            return (
-              <tr key={index}>
-                <td className="text-center" >{index}</td>
-                <td>{item.date}</td>
-                <td>{item.start}</td>
-                <td>{item.end}</td>
-              </tr>
-            );
-          })}
+          {props.data.map((item, index) => (
+            <tr key={index.date}>
+              <td className="text-center" >{index}</td>
+              <td>{item.date}</td>
+              <td>{item.start}</td>
+              <td>{item.end}</td>
+            </tr>
+          ))}
         </tbody>
       </Table>
 

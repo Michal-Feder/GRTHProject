@@ -1,25 +1,19 @@
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
+import history from 'utils/history';
+import { Link } from 'react-router-dom';
+import { Button, Navbar, Nav } from 'react-bootstrap';
+import Form from 'react-bootstrap/Form';
 import makeSelectNavigation from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-import messages from './messages';
-import { Switch, Route, Link } from 'react-router-dom';
-import history from 'utils/history';
-
 import { clickLogout } from '../App/action'
-
-//Bootstrap
-import { Button, Navbar, Nav } from 'react-bootstrap';
-import Form from 'react-bootstrap/Form';
-
 export function Navigation({ onClickLogout }) {
   useInjectReducer({ key: 'navigation', reducer });
   useInjectSaga({ key: 'navigation', saga });
@@ -62,7 +56,7 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return ({
-    onClickLogout: (state) => {
+    onClickLogout: () => {
       dispatch(clickLogout());
       history.push('/Login');
     },

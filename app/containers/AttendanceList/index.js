@@ -8,25 +8,20 @@ import history from 'utils/history';
 
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
+import List from 'components/List';
+import DateRangePicker from 'react-bootstrap-daterangepicker';
 import { makeSelectUserName, makeSelectAttendanceList, makeSelectUserPassword } from '../App/selectors'
 import reducer from './reducer';
 import saga from './saga';
-import List from 'components/List'
-
-//DateRangePicker
-import DateRangePicker from 'react-bootstrap-daterangepicker';
-// you will need the css that comes with bootstrap@3. if you are using
-// a tool like webpack, you can do the following:
 import 'bootstrap/dist/css/bootstrap.css';
-// you will also need the css that comes with bootstrap-daterangepicker
 import 'bootstrap-daterangepicker/daterangepicker.css';
 
-export function AttendanceList({ userName, userPassword, AttendanceList }) {
+export function AttendanceList({ userName, userPassword, attendanceList }) {
   useInjectReducer({ key: 'attendanceList', reducer });
   useInjectSaga({ key: 'attendanceList', saga });
-  const [data, setData] = useState(AttendanceList.filter(item => item.userName === userName && item.userPassword === userPassword));
+  const [data, setData] = useState(attendanceList.filter(item => item.userName === userName && item.userPassword === userPassword));
   useEffect(() => {
-    if (userName == '' || userPassword == '')
+    if (userName === '' || userPassword === '')
       history.push('/Login');
   }, []);
   function handleCallback(start, end) {
@@ -60,13 +55,13 @@ export function AttendanceList({ userName, userPassword, AttendanceList }) {
 AttendanceList.propTypes = {
   userName: PropTypes.string,
   userPassword: PropTypes.string,
-  AttendanceList: PropTypes.any
+  attendanceList: PropTypes.any
 };
 
 const mapStateToProps = createStructuredSelector({
   userName: makeSelectUserName(),
   userPassword: makeSelectUserPassword(),
-  AttendanceList: makeSelectAttendanceList()
+  attendanceList: makeSelectAttendanceList()
 });
 
 function mapDispatchToProps(dispatch) {
