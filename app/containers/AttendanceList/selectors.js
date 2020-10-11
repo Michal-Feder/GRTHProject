@@ -21,6 +21,11 @@ const makeSelectAttendanceList = () =>
     selectAttendanceListDomain,
     substate => substate,
   );
+const makeSelectAttendances = () =>
+  createSelector(
+    selectAttendanceListDomain,
+    substate => substate.attendances
+  );
 
 export default makeSelectAttendanceList;
-export { selectAttendanceListDomain };
+export { makeSelectAttendances };

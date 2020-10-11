@@ -1,34 +1,43 @@
 
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
-
-// Bootstrap
+import { FormattedMessage } from 'react-intl';
 import Table from 'react-bootstrap/Table';
+import messages from './messages';
+import './style.scss';
 
 function List(props) {
   return (
-    <div className="lst">
-      <Table striped bordered hover size="sm">
-        <thead>
-          <tr>
-            <th></th>
-            <th>Date</th>
-            <th>start</th>
-            <th>End</th>
-          </tr>
-        </thead>
-        <tbody>
-          {props.data.map((item, index) => (
-            <tr key={index.date}>
-              <td className="text-center" >{index}</td>
-              <td>{item.date}</td>
-              <td>{item.start}</td>
-              <td>{item.end}</td>
+    <div className="list">
+      <div className="lst">
+        <Table striped bordered hover size="sm">
+          <thead>
+            <tr>
+              <th></th>
+              <th>
+                <FormattedMessage {...messages.th_1} />
+              </th>
+              <th>   
+                <FormattedMessage {...messages.th_2} />
+              </th>
+              <th> 
+                <FormattedMessage {...messages.th_3} />
+              </th>
             </tr>
-          ))}
-        </tbody>
-      </Table>
+          </thead>
+          <tbody>
+            {props.data && props.data.map((item, index) => (
+              <tr key={index.date}>
+                <td className="text-center" >{index}</td>
+                <td>{item.date}</td>
+                <td>{item.start}</td>
+                <td>{item.end}</td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
 
+      </div>
     </div>
   );
 }

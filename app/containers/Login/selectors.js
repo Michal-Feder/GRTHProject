@@ -4,16 +4,7 @@ import { initialState } from './reducer';
 /**
  * Direct selector to the login state domain
  */
-
-const selectLoginDomain = state => state.login || initialState;
-
-/**
- * Other specific selectors
- */
-
-/**
- * Default selector used by Login
- */
+const selectLoginDomain = state => state.global || initialState;
 
 const makeSelectLogin = () =>
   createSelector(
@@ -21,5 +12,11 @@ const makeSelectLogin = () =>
     substate => substate,
   );
 
+const makeSelectError = () =>
+  createSelector(
+    selectLoginDomain,
+    globalState => globalState.error,
+  );
+
 export default makeSelectLogin;
-export { selectLoginDomain };
+export { selectLoginDomain,makeSelectError };

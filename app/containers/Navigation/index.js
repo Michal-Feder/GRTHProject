@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
+import { FormattedMessage } from 'react-intl';
 
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
@@ -10,37 +11,47 @@ import history from 'utils/history';
 import { Link } from 'react-router-dom';
 import { Button, Navbar, Nav } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
-import makeSelectNavigation from './selectors';
+import { IoMdPerson } from "react-icons/io";
+import messages from './messages';
+
 import reducer from './reducer';
 import saga from './saga';
-import { clickLogout } from '../App/action'
-export function Navigation({ onClickLogout }) {
+import { clickLogout } from '../App/action';
+import logo from './logo.png';
+import './style.scss';
+import { makeSelectCurrentUser } from '../App/selectors';
+export function Navigation({ onClickLogout,currentUser }) {
   useInjectReducer({ key: 'navigation', reducer });
   useInjectSaga({ key: 'navigation', saga });
-  const clickLogin = () => {
-    history.push('/Login')
-  }
+  const {Toggle,Collapse}=Navbar;
   return (
-    <div>
-      <Navbar bg="dark" variant="dark">
-        <Navbar.Brand >
-          <Link className="lnk" to="/">myProject</Link>
-        </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
+    <div className="navigation">
+      <Navbar className="navbar" bg="dark" variant="dark">
+        <Link className="logo" to="/login">
+          <img src={logo} alt="logo"/>
+        </Link>
+        <Toggle aria-controls="basic-navbar-nav" />
+        <Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
-            <Link className="lnk lnk-nav" to="/">Home</Link>
-            <Link className="lnk lnk-nav" to="/AttendanceRegistration">Attendance Registration</Link>
-            <Link className="lnk lnk-nav" to="/AttendanceList">Attendance List</Link>
+            <Link className="lnk lnk-nav" to="/">
+              <FormattedMessage {...messages.link_1} />
+            </Link>
+            <span className="span">|</span>
+            <Link className="lnk lnk-nav" to="/AttendanceList">
+              <FormattedMessage {...messages.link_2} />
+            </Link>
           </Nav>
           <Form inline>
-            <Button onClick={clickLogin} variant="danger">Login
+            <p>{currentUser.name}</p>
+            {currentUser&&<p className="icon"><IoMdPerson/></p>}
+            <Button onClick={()=>history.push('/Login')} variant="danger">
+              <FormattedMessage {...messages.login} />
             </Button>
             <Button onClick={onClickLogout} variant="outline-danger">
-              Logout
+              <FormattedMessage {...messages.logout} />
             </Button>
           </Form>
-        </Navbar.Collapse>
+        </Collapse>
       </Navbar>
     </div>
   );
@@ -48,11 +59,11 @@ export function Navigation({ onClickLogout }) {
 
 Navigation.propTypes = {
   onClickLogout: PropTypes.func,
+  currentUser:PropTypes.any
 };
 
 const mapStateToProps = createStructuredSelector({
-  navigation: makeSelectNavigation(),
-});
+  currentUser:makeSelectCurrentUser()});
 
 function mapDispatchToProps(dispatch) {
   return ({

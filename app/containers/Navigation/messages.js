@@ -13,4 +13,20 @@ export default defineMessages({
     id: `${scope}.header`,
     defaultMessage: 'This is the Navigation container!',
   },
+  link_1: {
+    id: `${scope}.link_1`,
+    defaultMessage: 'Attendance Registration',
+  },
+  link_2: {
+    id: `${scope}.link_2`,
+    defaultMessage: 'Attendance List',
+  },
+  login: {
+    id: `${scope}.login`,
+    defaultMessage: 'Login',
+  },
+  logout: {
+    id: `${scope}.logout`,
+    defaultMessage: 'Logout',
+  },
 });

@@ -1,13 +1,14 @@
-/*
- *
- * AttendanceList actions
- *
- */
+import { GET_ATTENDANCES_BY_ID_SUCCESS,GET_ATTENDANCES_BY_ID } from './constants';
 
-import { DEFAULT_ACTION } from './constants';
-
-export function defaultAction() {
+export function getAttendancesById(userId) {
   return {
-    type: DEFAULT_ACTION,
+    type: GET_ATTENDANCES_BY_ID,
+    userId
+  };
+}
+export function getAttendancesByIdSuccess(attendances) {
+  return {
+    type: GET_ATTENDANCES_BY_ID_SUCCESS,
+    attendances
   };
 }

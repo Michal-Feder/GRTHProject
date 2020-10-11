@@ -10,34 +10,45 @@ import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
 import List from 'components/List';
 import DateRangePicker from 'react-bootstrap-daterangepicker';
-import { makeSelectUserName, makeSelectAttendanceList, makeSelectUserPassword } from '../App/selectors'
+import { FormattedMessage } from 'react-intl';
+import { makeSelectCurrentUser } from '../App/selectors';
+import {makeSelectAttendances} from './selectors'
 import reducer from './reducer';
 import saga from './saga';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-daterangepicker/daterangepicker.css';
+import {getAttendancesById} from './actions';
+import messages from './messages';
+import './style.scss';
 
-export function AttendanceList({ userName, userPassword, attendanceList }) {
+export function AttendanceList({ currentUser,attendances,onGetAttendances }) {
   useInjectReducer({ key: 'attendanceList', reducer });
   useInjectSaga({ key: 'attendanceList', saga });
-  const [data, setData] = useState(attendanceList.filter(item => item.userName === userName && item.userPassword === userPassword));
+  const [data, setData] = useState();
   useEffect(() => {
-    if (userName === '' || userPassword === '')
+    if (currentUser===false){
       history.push('/Login');
+    }
+    else{
+      onGetAttendances(currentUser.id);
+      setData(attendances);
+    }
   }, []);
-  function handleCallback(start, end) {
-    setData(AttendanceList.filter(item => item.userName === userName && item.userPassword === userPassword && Date.parse(item.date) >= Date.parse(new Date(start._d).toDateString()) && Date.parse(item.date) <= Date.parse(new Date(end._d).toDateString())));
+  const handleCallback=(start, end)=> {
+    setData(attendances.filter(item=> Date.parse(item.date) >= Date.parse(new Date(start._d).toDateString()) && Date.parse(item.date) <= Date.parse(new Date(end._d).toDateString())));
   }
   return (
-
-    <div>
+    <div className="attendance-list">
       <Helmet>
         <title>AttendanceList</title>
         <meta name="description" content="Description of AttendanceList" />
       </Helmet>
       <div className="dateRange">
-        <table
-        ><tr>
-            <td><span>Search by date: </span></td>
+        <table>
+          <tr>
+            <td>
+              <FormattedMessage {...messages.header} />
+            </td>
             <td>
               <DateRangePicker onCallback={handleCallback}>
                 <input type="text" className="form-control" />
@@ -46,27 +57,28 @@ export function AttendanceList({ userName, userPassword, attendanceList }) {
           </tr>
         </table>
       </div>
-      <List data={data} />
+      {attendances && <List data={data} />}
 
     </div>
   );
 }
 
 AttendanceList.propTypes = {
-  userName: PropTypes.string,
-  userPassword: PropTypes.string,
-  attendanceList: PropTypes.any
+  currentUser: PropTypes.any,
+  onGetAttendances:PropTypes.any,
+  attendances:PropTypes.any
 };
 
 const mapStateToProps = createStructuredSelector({
-  userName: makeSelectUserName(),
-  userPassword: makeSelectUserPassword(),
-  attendanceList: makeSelectAttendanceList()
+  currentUser: makeSelectCurrentUser(),
+  attendances:makeSelectAttendances()
 });
 
 function mapDispatchToProps(dispatch) {
   return {
-    dispatch,
+    onGetAttendances:(userId)=>{
+      dispatch(getAttendancesById(userId));
+    },
   };
 }
 

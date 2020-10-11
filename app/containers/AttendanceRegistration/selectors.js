@@ -1,20 +1,15 @@
 import { createSelector } from 'reselect';
 import { initialState } from './reducer';
 
-/**
- * Direct selector to the attendanceRegistration state domain
- */
 
 const selectAttendanceRegistrationDomain = state =>
   state.attendanceRegistration || initialState;
 
-/**
- * Other specific selectors
- */
-
-/**
- * Default selector used by AttendanceRegistration
- */
+const makeSelectCurrentTodayAttendance = () =>
+  createSelector(
+    selectAttendanceRegistrationDomain,
+    attendanceRegistrationState => attendanceRegistrationState.currentTodayAttendance,
+  );
 
 const makeSelectAttendanceRegistration = () =>
   createSelector(
@@ -23,4 +18,5 @@ const makeSelectAttendanceRegistration = () =>
   );
 
 export default makeSelectAttendanceRegistration;
-export { selectAttendanceRegistrationDomain };
+export { selectAttendanceRegistrationDomain ,  makeSelectCurrentTodayAttendance,
+};

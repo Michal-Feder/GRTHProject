@@ -9,8 +9,16 @@ import { defineMessages } from 'react-intl';
 export const scope = 'app.components.List';
 
 export default defineMessages({
-  header: {
-    id: `${scope}.header`,
-    defaultMessage: 'This is the List component!',
+  th_1: {
+    id: `${scope}.th_1`,
+    defaultMessage: 'Date',
+  },
+  th_2: {
+    id: `${scope}.th_2`,
+    defaultMessage: 'Start',
+  },
+  th_3: {
+    id: `${scope}.th_3`,
+    defaultMessage: 'End',
   },
 });

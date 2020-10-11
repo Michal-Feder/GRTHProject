@@ -6,46 +6,51 @@ import { Helmet } from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import history from 'utils/history';
+import { FormattedMessage } from 'react-intl';
 
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
 import Clock from 'react-clock';
 import 'react-clock/dist/Clock.css';
 import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card'
+import messages from './messages';
 import reducer from './reducer';
 import saga from './saga';
-import { clickStart, clickEnd } from './actions';
+import { addAttendance, updateAttendance ,getCurrentToadayAttendanceOfUser} from './actions';
 import 'style.scss';
-import { makeSelectUserName, makeSelectAttendanceList, makeSelectUserPassword } from '../App/selectors'
+import './style.scss';
+import {makeSelectCurrentUser } from '../App/selectors'
+import {makeSelectCurrentTodayAttendance } from './selectors'
 
 const key = 'attendanceRegistration';
 
 export function AttendanceRegistration({
-  userName, userPassword, AttendanceList, onClickStart, onClickEnd
+  currentUser, onClickStart, onClickEnd,currentTodayAttendance,onGetCurrentToadayAttendanceOfUser
 }) {
-  const userStart = AttendanceList.find(el =>
-    (el.userName === userName && el.userPassword === userPassword && el.start !== undefined ? el.date === new Date().toDateString() : false)
-  );
-  const userEnd = AttendanceList.find(el =>
-    (el.userName === userName && el.userPassword === userPassword && el.end !== null ? el.date === new Date().toDateString() : false)
-  );
-  const buttonStartIsDisable = !(userStart === undefined);
-  const buttonEndIsDisable = !(userStart === undefined) || !(userEnd === undefined);
+  
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
   const [value, setValue] = useState(new Date());
   useEffect(() => {
-    if (userName === '' || userPassword === '')
-      history.push('/Login');
-    const interval = setInterval(() => setValue(new Date()), 1000);
-    return () => {
-      clearInterval(interval);
-    };
-
+    if (currentUser===false){
+      history.push('/login');
+    }
+    else{
+      onGetCurrentToadayAttendanceOfUser(currentUser.id)
+      const interval = setInterval(() => setValue(new Date()), 1000);
+      return () => {
+        clearInterval(interval);
+      }}
+    return null;
   }, []);
-
+  const userStart = currentTodayAttendance.start!==undefined;
+  const userEnd = currentTodayAttendance.end!==undefined;
+  const buttonStartIsDisable = !(userStart === false);
+  const buttonEndIsDisable = (userStart === false) || !(userEnd === false);
+ 
   return (
-    <div>
+    <div className="attendance-registration">
       <Helmet>
         <title>Attendance Registration</title>
         <meta
@@ -53,41 +58,53 @@ export function AttendanceRegistration({
           content="Description of AttendanceRegistration"
         />
       </Helmet>
-      <div className="center">
-        <Clock value={value} /></div>
-      <div className="center">
-        <Button
-          disabled={buttonStartIsDisable} onClick={() => onClickStart({ userName, userPassword, value })} variant="danger">start
-        </Button>
-        <Button
-          disabled={buttonEndIsDisable} onClick={() => onClickEnd({ userName, userPassword, value })} variant="danger">end
-        </Button>
-      </div>
+      <Card className="center">
+        <Card.Header>
+          <FormattedMessage {...messages.header} />
+        </Card.Header>
+        <Card.Body>
+          <Clock value={value} />
+          <div className="btns">
+            <Button
+              disabled={buttonStartIsDisable} onClick={() => onClickStart({id:currentUser.id, value} )} variant="danger">
+              <FormattedMessage {...messages.start} />
+            </Button>
+            <Button
+              disabled={buttonEndIsDisable} onClick={() => onClickEnd({currentTodayAttendance, value})} variant="danger">
+              <FormattedMessage {...messages.end} />
+            </Button>
+          </div>
+        </Card.Body>
+      </Card>
     </div >
   );
 }
 
 AttendanceRegistration.propTypes = {
-  userName: PropTypes.string,
-  userPassword: PropTypes.string,
-  AttendanceList: PropTypes.any,
+  currentUser:PropTypes.any,
   onClickStart: PropTypes.func,
-  onClickEnd: PropTypes.func
+  onClickEnd: PropTypes.func,
+  currentTodayAttendance:PropTypes.any,
+  onGetCurrentToadayAttendanceOfUser:PropTypes.func
 };
 
 const mapStateToProps = createStructuredSelector({
-  userName: makeSelectUserName(),
-  userPassword: makeSelectUserPassword(),
-  AttendanceList: makeSelectAttendanceList(),
+  currentUser: makeSelectCurrentUser(),
+  currentTodayAttendance: makeSelectCurrentTodayAttendance(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     onClickStart: (state) => {
-      dispatch(clickStart({ userName: state.userName, userPassword: state.userPassword, date: new Date().toDateString(), start: new Date(state.value).toLocaleTimeString(), end: null }))
+      dispatch(addAttendance({ userId:state.id, date: new Date().toDateString(), start: new Date(state.value).toLocaleTimeString(),}))
     },
     onClickEnd: (state) => {
-      dispatch(clickEnd({ userName: state.userName, userPassword: state.userPassword, date: new Date().toDateString(), end: new Date(state.value).toLocaleTimeString() }))
+      const attendance={...state.currentTodayAttendance};
+      attendance.end=new Date(state.value).toLocaleTimeString();
+      dispatch(updateAttendance(attendance));
+    },
+    onGetCurrentToadayAttendanceOfUser:(userId)=>{
+      dispatch(getCurrentToadayAttendanceOfUser(userId));
     }
   };
 }

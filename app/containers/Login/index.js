@@ -4,71 +4,82 @@ import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
+import { FormattedMessage } from 'react-intl';
 
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
-import history from 'utils/history';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import makeSelectLogin from './selectors';
+import Card from 'react-bootstrap/Card';
+import messages from './messages';
+import {makeSelectError} from '../App/selectors';
 import reducer from './reducer';
 import saga from './saga';
-import { setNamePassword } from './actions'
-
-export function Login({ onSubmit }) {
+import { loginLoaded } from '../App/action'
+import './style.scss';
+export function Login({ onSubmit ,error}) {
   useInjectReducer({ key: 'login', reducer });
   useInjectSaga({ key: 'login', saga });
-
   const [nameInput, setNameInput] = useState('');
   const [passwordInput, setPasswordInput] = useState('');
-
+  const {Label,Control} = Form;
   return (
-    <div>
+    <div className="login">
       <Helmet>
         <title>Login</title>
         <meta name="description" content="Description of Login" />
       </Helmet>
-      <div className="center">
-        <Form onSubmit={(e) => onSubmit(e, nameInput, passwordInput)}>
-          <Form.Group controlId="formBasicName">
-            <Form.Label>Name</Form.Label>
-            <Form.Control
-              type="text" placeholder="Enter name" onChange={e => setNameInput(e.target.value)} value={nameInput}
-            />
-            <Form.Text className="text-muted">
-            </Form.Text>
-          </Form.Group>
+      <Card className="center">
+        <Card.Header>
+          <FormattedMessage {...messages.header} />
+        </Card.Header>
+        <Card.Body>
+          <Form onSubmit={(e) => onSubmit(e, nameInput, passwordInput)}>
+            <Form.Group controlId="formBasicName">
+              <Label>
+                <FormattedMessage {...messages.name} />
 
-          <Form.Group controlId="formBasicPassword">
-            <Form.Label>Password</Form.Label>
-            <Form.Control
-              type="password" placeholder="Password" value={passwordInput} onChange={e => setPasswordInput(e.target.value)}
-            />
-          </Form.Group>
+              </Label>
+              <Control
+                type="text" placeholder="Enter name" onChange={(e) => setNameInput(e.target.value)} value={nameInput}
+              />
+              <Form.Text className="text-muted">
+              </Form.Text>
+            </Form.Group>
 
-          <Button disabled={nameInput === '' || passwordInput === ''} variant="danger" type="submit">
-            Submit
-          </Button>
-        </Form>
-      </div>
-    </div>
+            <Form.Group controlId="formBasicPassword">
+              <Form.Label>
+                <FormattedMessage {...messages.password} />
+
+              </Form.Label>
+              <Form.Control
+                type="password" placeholder="Enter password" value={passwordInput} onChange={(e) => setPasswordInput(e.target.value)}
+              />
+            </Form.Group>
+            <p>{error}</p>
+            <Button disabled={nameInput === '' || passwordInput === ''} variant="danger" type="submit">
+              <FormattedMessage {...messages.loginButton} />
+            </Button>
+          </Form>
+        </Card.Body>
+      </Card>    </div>
   );
 }
 
 Login.propTypes = {
   onSubmit: PropTypes.func,
+  error:PropTypes.any
 };
 
 const mapStateToProps = createStructuredSelector({
-  login: makeSelectLogin(),
+  error:makeSelectError()
 });
 
 function mapDispatchToProps(dispatch) {
   return ({
     onSubmit: (event, name, password) => {
       event.preventDefault();
-      dispatch(setNamePassword(name, password));
-      history.push('/');
+      dispatch(loginLoaded({user:{name, password}}));
     },
   });
 }

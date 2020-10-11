@@ -10,7 +10,19 @@ export const scope = 'app.containers.Login';
 
 export default defineMessages({
   header: {
-    id: `${scope}.header`,
-    defaultMessage: 'This is the Login container!',
+    id: `${scope}.hedear`,
+    defaultMessage: 'Login',
+  },
+  name: {
+    id: `${scope}.name`,
+    defaultMessage: 'Name',
+  },
+  password: {
+    id: `${scope}.password`,
+    defaultMessage: 'Password',
+  },
+  loginButton: {
+    id: `${scope}.loginButton`,
+    defaultMessage: 'Login',
   },
 });

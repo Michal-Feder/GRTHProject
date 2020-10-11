@@ -1,13 +1,16 @@
 import produce from 'immer';
-import { DEFAULT_ACTION } from './constants';
+import { GET_ATTENDANCES_BY_ID_SUCCESS } from './constants';
 
 export const initialState = {};
 
 /* eslint-disable default-case, no-param-reassign */
 const attendanceListReducer = (state = initialState, action) =>
-  produce(state, (/* draft */) => {
+  produce(state, (draft) => {
     switch (action.type) {
-      case DEFAULT_ACTION:
+      case GET_ATTENDANCES_BY_ID_SUCCESS:
+        draft.attendances=action.attendances;
+        break;
+      default:
         break;
     }
   });

@@ -11,6 +11,14 @@ export const scope = 'app.containers.AttendanceRegistration';
 export default defineMessages({
   header: {
     id: `${scope}.header`,
-    defaultMessage: 'This is the AttendanceRegistration container!',
+    defaultMessage: 'Attendance Registration',
+  },
+  start: {
+    id: `${scope}.start`,
+    defaultMessage: 'start',
+  },
+  end: {
+    id: `${scope}.end`,
+    defaultMessage: 'end',
   },
 });

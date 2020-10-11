@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+import { initialState } from './reducer';
 
 const selectRouter = state => state.router;
 const selectGlobal = state => state.global || initialState;
@@ -9,23 +10,36 @@ const makeSelectLocation = () =>
     routerState => routerState.location,
   );
 
-const makeSelectUserName = () =>
-  createSelector(
-    selectGlobal,
-    globalState => globalState.userName,
-  );
-
 const makeSelectAttendanceList = () =>
   createSelector(
     selectGlobal,
     globalState => globalState.AttendanceList,
   );
 
-const makeSelectUserPassword = () =>
+const makeSelectCurrentUser = () =>
   createSelector(
     selectGlobal,
-    globalState => globalState.userPassword,
+    globalState => globalState.currentUser,
   );
 
 
-export { makeSelectLocation, makeSelectUserName, makeSelectUserPassword, makeSelectAttendanceList };
+const makeSelectLoading = () =>
+  createSelector(
+    selectGlobal,
+    globalState => globalState.loading,
+  );
+
+const makeSelectError = () =>
+  createSelector(
+    selectGlobal,
+    globalState => globalState.error,
+  );
+
+
+
+export {  selectGlobal,
+  makeSelectLoading,
+  makeSelectError,
+  makeSelectLocation,
+  makeSelectCurrentUser,
+  makeSelectAttendanceList };

@@ -1,16 +1,28 @@
-/*
- * AppConstants
- * Each action has a corresponding type, which the reducer knows and picks up on.
- * To avoid weird typos between the reducer and the actions, we save them as
- * constants here. We prefix them with 'yourproject/YourComponent' so we avoid
- * reducers accidentally picking up actions they shouldn't.
- *
- * Follow this format:
- * export const YOUR_ACTION_CONSTANT = 'yourproject/YourContainer/YOUR_ACTION_CONSTANT';
- */
+// GET ATTENDANCE LIST
+export const LOAD_ATTENDANCE = 'GRTHProject/App/LOAD_ATTENDANCE';
+export const LOAD_ATTENDANCE_SUCCESS = 'GRTHProject/App/LOAD_ATTENDANCE_SUCCESS';
+export const LOAD_ATTENDANCE_ERROR = 'GRTHProject/App/LOAD_ATTENDANCE_ERROR';
+
+// GET SPECIFIC ATTENDANCE
+export const GET_ATTENDANCE = 'GRTHProject/App/GET_ATTENDANCE';
+export const GET_ATTENDANCE_SUCCESS = 'GRTHProject/App/GET_ATTENDANCE_SUCCESS';
+export const GET_ATTENDANCE_ERROR = 'GRTHProject/App/GET_ATTENDANCE_ERROR';
+
+// UPDATE ATTENDANCE
+export const UPDATE_ATTENDANCE = 'GRTHProject/App/UPDATE_ATTENDANCE';
+export const UPDATE_ATTENDANCE_SUCCESS = 'GRTHProject/App/UPDATE_ATTENDANCE_SUCCESS';
+export const UPDATE_ATTENDANCE_ERROR = 'GRTHProject/App/UPDATE_ATTENDANCE_ERROR';
+
+// ADD ATTENDANCE
+export const ADD_ATTENDANCE = 'GRTHProject/App/ADD_ATTENDANCE';
+export const ADD_ATTENDANCE_SUCCESS = 'GRTHProject/App/ADD_ATTENDANCE_SUCCESS';
+export const ADD_ATTENDANCE_ERROR = 'GRTHProject/App/ADD_ATTENDANCE_ERROR';
 
 export const START_PRESENCE = 'GRTHProject/App/START_PRESENCE';
 export const END_PRESENCE = 'GRTHProject/App/END_PRESENCE';
-export const SET_NAME_PASSWORD = 'GRTHProject/APP/SET_NAME_PASSWORD';
 export const RESET_NAME_PASSWORD = 'GRTHProject/APP/RESET_NAME_PASSWORD';
 
+// Login
+export const LOGIN_LOADED = 'GRTHProject/APP/LOGIN_LOADED';
+export const LOGIN_LOADED_SUCCESS = 'GRTHProject/APP/LOGIN_LOADED_SUCCESS';
+export const LOGIN_LOADED_ERROR = 'GRTHProject/APP/LOGIN_LOADED_ERROR';

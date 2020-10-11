@@ -27,58 +27,18 @@ body.fontLoaded {
   min-width: 100%;
 }
 
-p,
-label {
-  font-family: Georgia, Times, 'Times New Roman', serif;
-  line-height: 1.5em;
-}
 .btn{
   margin: 2px;
 }
 .center{
   margin: auto;
   width: 30%;
-  padding: 15px; 
   text-align: center;
   justify-content: center;
 }
-.form-control:focus {
-  border-color: #FF0000 !important;
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.6) !important;
-}
-.mr-auto{
-  font-size:medium;
-}
-.lnk{
-  color: #fafafa;
-}
-.lnk:hover{
-  color: #fafafad2;
-  text-decoration: none;
-}
-.lnk-nav{
-margin: 4px;
 
-}
-.lst{
-  width: 80%;
-  margin: auto;
-}
-.dateRange{
-  width: 80%;
-  margin: auto;
-  padding-top: 2%; 
-  padding-bottom: 1%; 
-  text-align: center;
-  justify-content: center;
-}
-.daterangepicker td.active, .daterangepicker td.active:hover {
-  background-color: #dc3545 !important;
-}
-.btn-primary {
-  background-color: #dc3545 !important;
-  border-color: #dc3545 !important;
-}
+
+
 .text-center{
   text-align: center;
 }
