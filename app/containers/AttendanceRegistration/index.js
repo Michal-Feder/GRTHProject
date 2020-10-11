@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-import history from 'utils/history';
+// import history from 'utils/history';
 import { FormattedMessage } from 'react-intl';
 
 import { useInjectSaga } from 'utils/injectSaga';
@@ -34,7 +34,7 @@ export function AttendanceRegistration({
   const [value, setValue] = useState(new Date());
   useEffect(() => {
     if (currentUser===false){
-      history.push('/login');
+      window.location.assign('/Login')  
     }
     else{
       onGetCurrentToadayAttendanceOfUser(currentUser.id)

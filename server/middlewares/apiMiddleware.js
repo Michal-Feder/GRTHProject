@@ -19,14 +19,6 @@ router.use((req, res, next) => {
   next();
 });
 
-router.get('/list', (req, res) => {
-  setTimeout(() => {
-    fs.readFile(jsonPathAttendance, 'utf8', (err, data) => {
-      res.end(data);
-    });
-  }, 600);
-});
-
 router.get('/getAttendances/:id', (req, res) => {
   fs.readFile(jsonPathAttendance, 'utf8', (err, data) => {
     const list = JSON.parse(data);
@@ -55,7 +47,6 @@ router.post('/add', (req, res) => {
 
 router.put('/update', (req, res) => {
   fs.readFile(jsonPathAttendance, 'utf8', (err, data) => {
-    console.log('update!!');
     const list = JSON.parse(data);
     const item = req.body;
     const newList = _updateItem(list, item);
@@ -64,23 +55,6 @@ router.put('/update', (req, res) => {
     fs.writeFile(jsonPathAttendance, jsonData, writeFileErr => {
       if (!writeFileErr) {
         res.end(JSON.stringify(newList[getLastId(newList)]));
-      } else {
-        res.end(data);
-      }
-    });
-  });
-});
-
-router.post('/delete/:id', (req, res) => {
-  fs.readFile(jsonPathAttendance, 'utf8', (err, data) => {
-    const list = JSON.parse(data);
-    const { id } = req.params;
-    const newList = _deleteItem(list, id);
-    const jsonData = JSON.stringify(newList);
-
-    fs.writeFile(jsonPathAttendance, jsonData, writeFileErr => {
-      if (!writeFileErr) {
-        res.end(jsonData);
       } else {
         res.end(data);
       }
@@ -112,7 +86,6 @@ const _getItem = (list, id) => {
 };
 
 const _updateItem = (list, updatedItem) => {
-  console.log('update=---',updatedItem);
   const newList = [...list];
   const currentItemIndex = newList.findIndex(
     item => item.id.toString() === updatedItem.id.toString(),
@@ -121,14 +94,6 @@ const _updateItem = (list, updatedItem) => {
   return newList;
 };
 
-const _deleteItem = (list, id) => {
-  const newList = [...list];
-  const currentItemIndex = list.findIndex(
-    item => item.id.toString() === id.toString(),
-  );
-  newList.splice(currentItemIndex, 1);
-  return newList;
-};
 const getLastId=(list)=>{
   let lastId = 0;
   if (list.length > 0) {

@@ -33,7 +33,7 @@ export function Navigation({ onClickLogout,currentUser }) {
         <Toggle aria-controls="basic-navbar-nav" />
         <Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
-            <Link className="lnk lnk-nav" to="/">
+            <Link className="lnk lnk-nav" to="/AttendanceRegistration">
               <FormattedMessage {...messages.link_1} />
             </Link>
             <span className="span">|</span>

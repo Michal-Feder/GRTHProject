@@ -32,6 +32,7 @@ export function attendancesLoaded(attendances) {
     attendances,
   };
 }
+
 export function attendanceLoadingError(error) {
   return {
     type: LOAD_ATTENDANCE_ERROR,
