@@ -1,4 +1,4 @@
-import { RESET_NAME_PASSWORD ,
+import { LOGOUT ,
   LOAD_ATTENDANCE,
   LOAD_ATTENDANCE_SUCCESS,
   LOAD_ATTENDANCE_ERROR,
@@ -18,7 +18,7 @@ import { RESET_NAME_PASSWORD ,
 
 export function clickLogout() {
   return {
-    type: RESET_NAME_PASSWORD,
+    type: LOGOUT,
   };
 }
 export function loadAttendances() {

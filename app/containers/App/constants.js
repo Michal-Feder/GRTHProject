@@ -20,7 +20,7 @@ export const ADD_ATTENDANCE_ERROR = 'GRTHProject/App/ADD_ATTENDANCE_ERROR';
 
 export const START_PRESENCE = 'GRTHProject/App/START_PRESENCE';
 export const END_PRESENCE = 'GRTHProject/App/END_PRESENCE';
-export const RESET_NAME_PASSWORD = 'GRTHProject/APP/RESET_NAME_PASSWORD';
+export const LOGOUT = 'GRTHProject/APP/RESET_NAME_PASSWORD';
 
 // Login
 export const LOGIN_LOADED = 'GRTHProject/APP/LOGIN_LOADED';

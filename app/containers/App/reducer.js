@@ -1,9 +1,8 @@
 import produce from 'immer';
-
 import {
   START_PRESENCE,
   END_PRESENCE,
-  RESET_NAME_PASSWORD,
+  LOGOUT,
   LOAD_ATTENDANCE,
   LOAD_ATTENDANCE_SUCCESS,
   LOAD_ATTENDANCE_ERROR,
@@ -37,10 +36,10 @@ const appReducer = (state = initialState, action) =>
                         e.date === action.AttendanceList.date);
         draft.AttendanceList[index].end = action.AttendanceList.end;
         break;
-      case RESET_NAME_PASSWORD:
+      case LOGOUT:
         draft.error = false;
         draft.currentUser = false;
-        break;
+        break;      
       case LOAD_ATTENDANCE:
         draft.loading = true;
         draft.error = false;
