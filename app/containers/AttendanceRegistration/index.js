@@ -34,7 +34,8 @@ export function AttendanceRegistration({
   const [value, setValue] = useState(new Date());
   useEffect(() => {
     if (currentUser===false){
-      window.location.assign('/Login')  
+      window.location.assign('/Login');
+      // history.push('login');
     }
     else{
       onGetCurrentToadayAttendanceOfUser(currentUser.id)
@@ -99,9 +100,7 @@ function mapDispatchToProps(dispatch) {
       dispatch(addAttendance({ userId:state.id, date: new Date().toDateString(), start: new Date(state.value).toLocaleTimeString(),}))
     },
     onClickEnd: (state) => {
-      const attendance={...state.currentTodayAttendance};
-      attendance.end=new Date(state.value).toLocaleTimeString();
-      dispatch(updateAttendance(attendance));
+      dispatch(updateAttendance({...state.currentTodayAttendance,end:new Date(state.value).toLocaleTimeString()}));
     },
     onGetCurrentToadayAttendanceOfUser:(userId)=>{
       dispatch(getCurrentToadayAttendanceOfUser(userId));

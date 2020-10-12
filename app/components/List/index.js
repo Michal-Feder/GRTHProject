@@ -7,6 +7,8 @@ import messages from './messages';
 import './style.scss';
 
 function List(props) {
+  // if(props)
+  //   throw new Error("error in list component");
   return (
     <div className="list">
       <div className="lst">

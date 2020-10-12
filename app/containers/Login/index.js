@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
@@ -20,8 +20,8 @@ import './style.scss';
 export function Login({ onSubmit ,error}) {
   useInjectReducer({ key: 'login', reducer });
   useInjectSaga({ key: 'login', saga });
-  const [nameInput, setNameInput] = useState('');
-  const [passwordInput, setPasswordInput] = useState('');
+  const nameInput=React.createRef();
+  const passwordInput=React.createRef();
   const {Label,Control} = Form;
   return (
     <div className="login">
@@ -34,14 +34,14 @@ export function Login({ onSubmit ,error}) {
           <FormattedMessage {...messages.header} />
         </Card.Header>
         <Card.Body>
-          <Form onSubmit={(e) => onSubmit(e, nameInput, passwordInput)}>
+          <Form onSubmit={(e) => onSubmit(e, nameInput.current.value, passwordInput.current.value)}>
             <Form.Group controlId="formBasicName">
               <Label>
                 <FormattedMessage {...messages.name} />
 
               </Label>
               <Control
-                type="text" placeholder="Enter name" onChange={(e) => setNameInput(e.target.value)} value={nameInput}
+                type="text" placeholder="Enter name" ref={nameInput} onClick={() => nameInput.current.focus()} 
               />
               <Form.Text className="text-muted">
               </Form.Text>
@@ -53,7 +53,7 @@ export function Login({ onSubmit ,error}) {
 
               </Form.Label>
               <Form.Control
-                type="password" placeholder="Enter password" value={passwordInput} onChange={(e) => setPasswordInput(e.target.value)}
+                type="password" placeholder="Enter password" ref={passwordInput} onClick={() => passwordInput.current.focus()}
               />
             </Form.Group>
             <p>{error}</p>

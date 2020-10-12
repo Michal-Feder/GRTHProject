@@ -33,8 +33,10 @@ import configureStore from './configureStore';
 // Import i18n messages
 import { translationMessages } from './i18n';
 
-//Bootstrap
+// Bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
+
+import ErrorBoundary from './ErrorBoundary';
 
 // import './App.scss';
 
@@ -48,7 +50,9 @@ const render = messages => {
     <Provider store={store}>
       <LanguageProvider messages={messages}>
         <ConnectedRouter history={history}>
-          <App />
+          <ErrorBoundary>
+            <App />
+          </ErrorBoundary>
         </ConnectedRouter>
       </LanguageProvider>
     </Provider>,

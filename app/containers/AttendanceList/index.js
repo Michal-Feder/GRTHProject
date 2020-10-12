@@ -11,6 +11,7 @@ import { useInjectReducer } from 'utils/injectReducer';
 import List from 'components/List';
 import DateRangePicker from 'react-bootstrap-daterangepicker';
 import { FormattedMessage } from 'react-intl';
+import ErrorBoundary from '../../ErrorBoundary';
 import { makeSelectCurrentUser } from '../App/selectors';
 import {makeSelectAttendances} from './selectors'
 import reducer from './reducer';
@@ -57,8 +58,7 @@ export function AttendanceList({ currentUser,attendances,onGetAttendances }) {
           </tr>
         </table>
       </div>
-      {attendances && <List data={data} />}
-
+      {data &&<ErrorBoundary><List data={data} /></ErrorBoundary>}
     </div>
   );
 }
