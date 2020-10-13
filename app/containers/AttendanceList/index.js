@@ -24,16 +24,18 @@ import './style.scss';
 export function AttendanceList({ currentUser,attendances,onGetAttendances }) {
   useInjectReducer({ key: 'attendanceList', reducer });
   useInjectSaga({ key: 'attendanceList', saga });
-  const [data, setData] = useState([]);
+  const [data, setData] = useState();
   useEffect(() => {
     if (currentUser===false){
       history.push('/Login');
     }
     else{
-      onGetAttendances(currentUser.id);
+      if(attendances?attendances[0].userId!==currentUser.id:false||!attendances)
+        onGetAttendances(currentUser.id);
       setData(attendances);
     }
-  }, []);
+  }, [attendances]);
+
   const handleCallback=(start, end)=> {
     setData(attendances.filter(item=> Date.parse(item.date) >= Date.parse(new Date(start._d).toDateString()) && Date.parse(item.date) <= Date.parse(new Date(end._d).toDateString())));
   }
@@ -57,7 +59,7 @@ export function AttendanceList({ currentUser,attendances,onGetAttendances }) {
           </tr>
         </table>
       </div>
-      {(data||data?data.length>0:false) &&<List data={data} />}
+      {data &&<List data={data} />}
     </div>
   );
 }
