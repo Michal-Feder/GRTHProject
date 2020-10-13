@@ -1,8 +1,10 @@
 
 import React, { memo } from 'react';
+import { compose } from 'redux';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import Table from 'react-bootstrap/Table';
+import errorBoundary from '../../ErrorBoundary';
 import messages from './messages';
 import './style.scss';
 
@@ -48,4 +50,6 @@ List.propTypes = {
   data: PropTypes.any
 };
 
-export default memo(List);
+export default compose(
+  memo,errorBoundary)(List);
+

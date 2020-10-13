@@ -19,10 +19,9 @@ function AlertDismissibleExample({error,errorInfo}){
       </Alert>
     );
   }
-  return <Button onClick={() => setShow(true)}>Show Error</Button>;
-  
-  
+  return <Button variant="danger" onClick={() => setShow(true)}>Show Error</Button>;
 }
+
 class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
@@ -52,4 +51,13 @@ ErrorBoundary.propTypes = {
   children: PropTypes.any
 };
 
-export default ErrorBoundary;
+function errorBoundary(Component) {
+  return function(props) {
+    return (
+      <ErrorBoundary>
+        <Component {...props} />
+      </ErrorBoundary>
+    );
+  };
+}
+export default errorBoundary;

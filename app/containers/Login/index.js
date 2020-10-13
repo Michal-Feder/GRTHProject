@@ -8,21 +8,26 @@ import { FormattedMessage } from 'react-intl';
 
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
+
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import messages from './messages';
+import 'style.scss';
+import errorBoundary from '../../ErrorBoundary';
 import {makeSelectError} from '../App/selectors';
+import { loginLoaded } from '../App/action'
+import messages from './messages';
 import reducer from './reducer';
 import saga from './saga';
-import { loginLoaded } from '../App/action'
 import './style.scss';
+
 export function Login({ onSubmit ,error}) {
   useInjectReducer({ key: 'login', reducer });
   useInjectSaga({ key: 'login', saga });
   const nameInput=React.createRef();
   const passwordInput=React.createRef();
-  const {Label,Control} = Form;
+  const {Text,Group,Label,Control} = Form;
+  const {Body,Header} = Card;
   return (
     <div className="login">
       <Helmet>
@@ -30,12 +35,12 @@ export function Login({ onSubmit ,error}) {
         <meta name="description" content="Description of Login" />
       </Helmet>
       <Card className="center">
-        <Card.Header>
+        <Header>
           <FormattedMessage {...messages.header} />
-        </Card.Header>
-        <Card.Body>
+        </Header>
+        <Body>
           <Form onSubmit={(e) => onSubmit(e, nameInput.current.value, passwordInput.current.value)}>
-            <Form.Group controlId="formBasicName">
+            <Group controlId="formBasicName">
               <Label>
                 <FormattedMessage {...messages.name} />
 
@@ -43,25 +48,25 @@ export function Login({ onSubmit ,error}) {
               <Control
                 type="text" placeholder="Enter name" ref={nameInput} onClick={() => nameInput.current.focus()} 
               />
-              <Form.Text className="text-muted">
-              </Form.Text>
-            </Form.Group>
+              <Text className="text-muted">
+              </Text>
+            </Group>
 
-            <Form.Group controlId="formBasicPassword">
-              <Form.Label>
+            <Group controlId="formBasicPassword">
+              <Label>
                 <FormattedMessage {...messages.password} />
 
-              </Form.Label>
-              <Form.Control
+              </Label>
+              <Control
                 type="password" placeholder="Enter password" ref={passwordInput} onClick={() => passwordInput.current.focus()}
               />
-            </Form.Group>
+            </Group>
             <p>{error}</p>
-            <Button disabled={nameInput === '' || passwordInput === ''} variant="danger" type="submit">
+            <Button variant="danger" type="submit">
               <FormattedMessage {...messages.loginButton} />
             </Button>
           </Form>
-        </Card.Body>
+        </Body>
       </Card>
     </div>
   );
@@ -93,4 +98,5 @@ const withConnect = connect(
 export default compose(
   withConnect,
   memo,
+  errorBoundary
 )(Login);

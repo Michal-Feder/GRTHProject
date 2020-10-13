@@ -5,19 +5,18 @@ import { Helmet } from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import history from 'utils/history';
-
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
-import List from 'components/List';
 import DateRangePicker from 'react-bootstrap-daterangepicker';
 import { FormattedMessage } from 'react-intl';
-import ErrorBoundary from '../../ErrorBoundary';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap-daterangepicker/daterangepicker.css';
+import List from '../../components/List';
+import errorBoundary from '../../ErrorBoundary';
 import { makeSelectCurrentUser } from '../App/selectors';
 import {makeSelectAttendances} from './selectors'
 import reducer from './reducer';
 import saga from './saga';
-import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap-daterangepicker/daterangepicker.css';
 import {getAttendancesById} from './actions';
 import messages from './messages';
 import './style.scss';
@@ -25,7 +24,7 @@ import './style.scss';
 export function AttendanceList({ currentUser,attendances,onGetAttendances }) {
   useInjectReducer({ key: 'attendanceList', reducer });
   useInjectSaga({ key: 'attendanceList', saga });
-  const [data, setData] = useState();
+  const [data, setData] = useState([]);
   useEffect(() => {
     if (currentUser===false){
       history.push('/Login');
@@ -58,7 +57,7 @@ export function AttendanceList({ currentUser,attendances,onGetAttendances }) {
           </tr>
         </table>
       </div>
-      {data &&<ErrorBoundary><List data={data} /></ErrorBoundary>}
+      {(data||data?data.length>0:false) &&<List data={data} />}
     </div>
   );
 }
@@ -90,4 +89,5 @@ const withConnect = connect(
 export default compose(
   withConnect,
   memo,
+  errorBoundary
 )(AttendanceList);

@@ -4,13 +4,13 @@ import { connect } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
-
-import AttendanceRegistration from 'containers/AttendanceRegistration/Loadable'
-import NotFoundPage from 'containers/NotFoundPage/Loadable';
-import Login from 'containers/Login/Loadable';
-import Navigation from 'containers/Navigation/Loadable';
-import AttendanceList from 'containers/AttendanceList/Loadable';
 import { useInjectSaga } from 'utils/injectSaga';
+import errorBoundary from '../../ErrorBoundary';
+import NotFoundPage from '../NotFoundPage/Loadable';
+import Login from '../Login/Loadable';
+import Navigation from '../Navigation/Loadable';
+import AttendanceList from '../AttendanceList/Loadable';
+import AttendanceRegistration from '../AttendanceRegistration/Loadable';
 import saga from './saga';
 import {loadAttendances} from './action';
 import {makeSelectAttendanceList,makeSelectLoading,makeSelectError} from './selectors'
@@ -59,4 +59,5 @@ const withConnect = connect(
 export default compose(
   withConnect,
   memo,
+  errorBoundary
 )(App);

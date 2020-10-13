@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-// import history from 'utils/history';
 import { FormattedMessage } from 'react-intl';
 
 import { useInjectSaga } from 'utils/injectSaga';
@@ -13,12 +12,12 @@ import { useInjectReducer } from 'utils/injectReducer';
 import Clock from 'react-clock';
 import 'react-clock/dist/Clock.css';
 import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card'
+import Card from 'react-bootstrap/Card';
+import errorBoundary from '../../ErrorBoundary';
 import messages from './messages';
 import reducer from './reducer';
 import saga from './saga';
 import { addAttendance, updateAttendance ,getCurrentToadayAttendanceOfUser} from './actions';
-import 'style.scss';
 import './style.scss';
 import {makeSelectCurrentUser } from '../App/selectors'
 import {makeSelectCurrentTodayAttendance } from './selectors'
@@ -31,6 +30,7 @@ export function AttendanceRegistration({
   
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
+  const {Body,Header} = Card;
   const [value, setValue] = useState(new Date());
   useEffect(() => {
     if (currentUser===false){
@@ -47,8 +47,6 @@ export function AttendanceRegistration({
   }, []);
   const userStart = currentTodayAttendance.start!==undefined;
   const userEnd = currentTodayAttendance.end!==undefined;
-  const buttonStartIsDisable = !(userStart === false);
-  const buttonEndIsDisable = (userStart === false) || !(userEnd === false);
  
   return (
     <div className="attendance-registration">
@@ -60,22 +58,22 @@ export function AttendanceRegistration({
         />
       </Helmet>
       <Card className="center">
-        <Card.Header>
+        <Header>
           <FormattedMessage {...messages.header} />
-        </Card.Header>
-        <Card.Body>
+        </Header>
+        <Body>
           <Clock value={value} />
           <div className="btns">
             <Button
-              disabled={buttonStartIsDisable} onClick={() => onClickStart({id:currentUser.id, value} )} variant="danger">
+              disabled={!!userStart} onClick={() => onClickStart({id:currentUser.id, value} )} variant="danger">
               <FormattedMessage {...messages.start} />
             </Button>
             <Button
-              disabled={buttonEndIsDisable} onClick={() => onClickEnd({currentTodayAttendance, value})} variant="danger">
+              disabled={!userStart || !!userEnd } onClick={() => onClickEnd({currentTodayAttendance, value})} variant="danger">
               <FormattedMessage {...messages.end} />
             </Button>
           </div>
-        </Card.Body>
+        </Body>
       </Card>
     </div >
   );
@@ -96,11 +94,11 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    onClickStart: (state) => {
-      dispatch(addAttendance({ userId:state.id, date: new Date().toDateString(), start: new Date(state.value).toLocaleTimeString(),}))
+    onClickStart: ({id,value}) => {
+      dispatch(addAttendance({ userId:id, date: new Date().toDateString(), start: new Date(value).toLocaleTimeString(),}))
     },
-    onClickEnd: (state) => {
-      dispatch(updateAttendance({...state.currentTodayAttendance,end:new Date(state.value).toLocaleTimeString()}));
+    onClickEnd: ({currentTodayAttendance,value}) => {
+      dispatch(updateAttendance({...currentTodayAttendance,end:new Date(value).toLocaleTimeString()}));
     },
     onGetCurrentToadayAttendanceOfUser:(userId)=>{
       dispatch(getCurrentToadayAttendanceOfUser(userId));
@@ -116,4 +114,5 @@ const withConnect = connect(
 export default compose(
   withConnect,
   memo,
+  errorBoundary
 )(AttendanceRegistration);

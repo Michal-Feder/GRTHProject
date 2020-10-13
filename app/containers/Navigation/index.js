@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { FormattedMessage } from 'react-intl';
-
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
 import history from 'utils/history';
@@ -12,14 +11,14 @@ import { Link } from 'react-router-dom';
 import { Button, Navbar, Nav } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import { IoMdPerson } from "react-icons/io";
+import errorBoundary from '../../ErrorBoundary';
+import { clickLogout } from '../App/action';
+import { makeSelectCurrentUser } from '../App/selectors';
 import messages from './messages';
-
 import reducer from './reducer';
 import saga from './saga';
-import { clickLogout } from '../App/action';
 import logo from './logo.png';
 import './style.scss';
-import { makeSelectCurrentUser } from '../App/selectors';
 export function Navigation({ onClickLogout,currentUser }) {
   useInjectReducer({ key: 'navigation', reducer });
   useInjectSaga({ key: 'navigation', saga });
@@ -82,4 +81,5 @@ const withConnect = connect(
 export default compose(
   withConnect,
   memo,
+  errorBoundary
 )(Navigation);

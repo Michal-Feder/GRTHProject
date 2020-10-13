@@ -36,8 +36,6 @@ import { translationMessages } from './i18n';
 // Bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import ErrorBoundary from './ErrorBoundary';
-
 // import './App.scss';
 
 // Create redux store with history
@@ -50,9 +48,7 @@ const render = messages => {
     <Provider store={store}>
       <LanguageProvider messages={messages}>
         <ConnectedRouter history={history}>
-          <ErrorBoundary>
-            <App />
-          </ErrorBoundary>
+          <App />
         </ConnectedRouter>
       </LanguageProvider>
     </Provider>,
