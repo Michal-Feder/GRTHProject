@@ -62,7 +62,8 @@ export function Login({ onSubmit ,error}) {
             </Button>
           </Form>
         </Card.Body>
-      </Card>    </div>
+      </Card>
+    </div>
   );
 }
 
