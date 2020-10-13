@@ -6,9 +6,9 @@ import { Helmet } from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { FormattedMessage } from 'react-intl';
-
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
+import history from 'utils/history';
 import Clock from 'react-clock';
 import 'react-clock/dist/Clock.css';
 import Button from 'react-bootstrap/Button';
@@ -34,8 +34,7 @@ export function AttendanceRegistration({
   const [value, setValue] = useState(new Date());
   useEffect(() => {
     if (currentUser===false){
-      window.location.assign('/Login');
-      // history.push('login');
+      history.push('login');
     }
     else{
       onGetCurrentToadayAttendanceOfUser(currentUser.id)
@@ -47,7 +46,6 @@ export function AttendanceRegistration({
   }, []);
   const userStart = currentTodayAttendance.start!==undefined;
   const userEnd = currentTodayAttendance.end!==undefined;
- 
   return (
     <div className="attendance-registration">
       <Helmet>
