@@ -17,7 +17,7 @@ import { makeSelectCurrentUser } from '../App/selectors';
 import messages from './messages';
 import reducer from './reducer';
 import saga from './saga';
-import logo from './logo.png';
+import logo from '../../images/logo.png';
 import './style.scss';
 export function Navigation({ onClickLogout,currentUser }) {
   useInjectReducer({ key: 'navigation', reducer });

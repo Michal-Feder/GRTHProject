@@ -1,17 +1,9 @@
-import { END_PRESENCE, START_PRESENCE } from '../App/constants';
-import {UPDATE_ATTENDANCE,ADD_ATTENDANCE,GET_CURRENT_TODAY_ATTENDANCE_OF_USER_ERROR,GET_CURRENT_TODAY_ATTENDANCE_OF_USER_SUCCESS,GET_CURRENT_TODAY_ATTENDANCE_OF_USER } from './constants';
-export function clickStart(AttendanceList) {
-  return {
-    type: START_PRESENCE,
-    AttendanceList,
-  };
-}
-export function clickEnd(AttendanceList) {
-  return {
-    type: END_PRESENCE,
-    AttendanceList,
-  };
-}
+import {
+  UPDATE_ATTENDANCE,ADD_ATTENDANCE,
+  GET_CURRENT_TODAY_ATTENDANCE_OF_USER_ERROR,
+  GET_CURRENT_TODAY_ATTENDANCE_OF_USER_SUCCESS,
+  GET_CURRENT_TODAY_ATTENDANCE_OF_USER 
+} from './constants';
 
 export function getCurrentToadayAttendanceOfUser(userId){
   return{

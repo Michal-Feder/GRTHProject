@@ -1,67 +1,38 @@
-import { LOGOUT ,
-  LOAD_ATTENDANCE,
-  LOAD_ATTENDANCE_SUCCESS,
-  LOAD_ATTENDANCE_ERROR,
-  GET_ATTENDANCE,
-  GET_ATTENDANCE_SUCCESS,
-  GET_ATTENDANCE_ERROR,
+import {
+  ADD_ATTENDANCE_SUCCESS,
+  ADD_ATTENDANCE_ERROR,
+  ADD_ATTENDANCE,
   UPDATE_ATTENDANCE,
   UPDATE_ATTENDANCE_SUCCESS,
   UPDATE_ATTENDANCE_ERROR,
-  ADD_ATTENDANCE,
-  ADD_ATTENDANCE_SUCCESS,
-  ADD_ATTENDANCE_ERROR,
   LOGIN_LOADED,
   LOGIN_LOADED_SUCCESS,
-  LOGIN_LOADED_ERROR
-} from './constants'
+  LOGIN_LOADED_ERROR,
+  LOGOUT
+} from './constants';
 
-export function clickLogout() {
+// ADD ATTENDANCE
+export function addAttendance(attendance) {
   return {
-    type: LOGOUT,
-  };
-}
-export function loadAttendances() {
-  return {
-    type: LOAD_ATTENDANCE,
-  };
-}
-export function attendancesLoaded(attendances) {
-  return {
-    type: LOAD_ATTENDANCE_SUCCESS,
-    attendances,
-  };
-}
-
-export function attendanceLoadingError(error) {
-  return {
-    type: LOAD_ATTENDANCE_ERROR,
-    error,
-  };
-}
-
-// GET SPECIFIC ATTENDANCE
-export function getAttendance(attendanceId) {
-  return {
-    type: GET_ATTENDANCE,
-    attendanceId,
-  };
-}
-
-export function getAttendanceSuccess(attendance) {
-  return {
-    type: GET_ATTENDANCE_SUCCESS,
+    type: ADD_ATTENDANCE,
     attendance,
   };
 }
 
-export function getAttendanceError(error) {
+export function addAttendanceSuccess(attendance, attendances) {
   return {
-    type: GET_ATTENDANCE_ERROR,
-    error,
+    type: ADD_ATTENDANCE_SUCCESS,
+    attendance,
+    attendances,
   };
 }
 
+export function addAttendanceError(error) {
+  return {
+    type: ADD_ATTENDANCE_ERROR,
+    error,
+  };
+}
 // UPDATE ATTENDANCE
 export function updateAttendance(attendance) {
   return {
@@ -85,26 +56,9 @@ export function updateAttendanceError(error) {
   };
 }
 
-// ADD ATTENDANCE
-export function addAttendance(attendance) {
+export function clickLogout() {
   return {
-    type: ADD_ATTENDANCE,
-    attendance,
-  };
-}
-
-export function addAttendanceSuccess(attendance, attendances) {
-  return {
-    type: ADD_ATTENDANCE_SUCCESS,
-    attendance,
-    attendances,
-  };
-}
-
-export function addAttendanceError(error) {
-  return {
-    type: ADD_ATTENDANCE_ERROR,
-    error,
+    type: LOGOUT,
   };
 }
 

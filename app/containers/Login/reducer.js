@@ -4,7 +4,7 @@ export const initialState = {
 };
 
 const loginReducer = (state = initialState, action) =>
-  produce(state, ( /* draft */ ) => {
+  produce(state, (  /* draft */  ) => {
     switch (action.type) {
       default:
         break;

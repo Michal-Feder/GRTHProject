@@ -15,9 +15,9 @@ import Card from 'react-bootstrap/Card';
 import 'style.scss';
 import errorBoundary from '../../ErrorBoundary';
 import {makeSelectError} from '../App/selectors';
-import { loginLoaded } from '../App/action'
 import messages from './messages';
 import reducer from './reducer';
+import {loginLoaded} from '../App/action'
 import saga from './saga';
 import './style.scss';
 

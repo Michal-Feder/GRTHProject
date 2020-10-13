@@ -52,12 +52,10 @@ ErrorBoundary.propTypes = {
 };
 
 function errorBoundary(Component) {
-  return function(props) {
-    return (
-      <ErrorBoundary>
-        <Component {...props} />
-      </ErrorBoundary>
-    );
-  };
+  return  (props)=> (
+    <ErrorBoundary>
+      <Component {...props} />
+    </ErrorBoundary>
+  );
 }
 export default errorBoundary;

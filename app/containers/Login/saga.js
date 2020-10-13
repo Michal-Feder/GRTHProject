@@ -10,7 +10,7 @@ import {
 
 import {
   loginLoadedSuccess,
-  loginLoadedError
+  loginLoadedError,
 } from '../App/action';
 
 const baseUrl = '/api';
