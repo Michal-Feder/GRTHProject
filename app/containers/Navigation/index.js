@@ -25,7 +25,7 @@ export function Navigation({ onClickLogout,currentUser }) {
   const {Toggle,Collapse}=Navbar;
   return (
     <div className="navigation">
-      <Navbar className="navbar" bg="dark" variant="dark">
+      <Navbar className="navbar" variant="ligth">
         <Link className="logo" to="/login">
           <img src={logo} alt="logo"/>
         </Link>
@@ -43,10 +43,10 @@ export function Navigation({ onClickLogout,currentUser }) {
           <Form inline>
             <p>{currentUser.name}</p>
             {currentUser&&<p className="icon"><IoMdPerson/></p>}
-            <Button onClick={()=>history.push('/Login')} variant="danger">
+            <Button onClick={()=>history.push('/Login')} variant="light">
               <FormattedMessage {...messages.login} />
             </Button>
-            <Button onClick={onClickLogout} variant="outline-danger">
+            <Button onClick={onClickLogout} variant="outline-warning">
               <FormattedMessage {...messages.logout} />
             </Button>
           </Form>

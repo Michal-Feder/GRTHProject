@@ -25,9 +25,7 @@ import {makeSelectCurrentTodayAttendance } from './selectors'
 const key = 'attendanceRegistration';
 
 export function AttendanceRegistration({
-  currentUser, onClickStart, onClickEnd,currentTodayAttendance,onGetCurrentToadayAttendanceOfUser
-}) {
-  
+  currentUser, onClickStart, onClickEnd,currentTodayAttendance,onGetCurrentToadayAttendanceOfUser}) {
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
   const {Body,Header} = Card;
@@ -42,7 +40,7 @@ export function AttendanceRegistration({
       return () => {
         clearInterval(interval);
       }}
-    return null;
+    return false;
   }, []);
   const userStart = currentTodayAttendance.start!==undefined;
   const userEnd = currentTodayAttendance.end!==undefined;
@@ -63,11 +61,11 @@ export function AttendanceRegistration({
           <Clock value={value} />
           <div className="btns">
             <Button
-              disabled={!!userStart} onClick={() => onClickStart({id:currentUser.id, value} )} variant="danger">
+              disabled={!!userStart} onClick={() => onClickStart({id:currentUser.id, value} )} variant="warning">
               <FormattedMessage {...messages.start} />
             </Button>
             <Button
-              disabled={!userStart || !!userEnd } onClick={() => onClickEnd({currentTodayAttendance, value})} variant="danger">
+              disabled={!userStart || !!userEnd } onClick={() => onClickEnd({currentTodayAttendance, value})} variant="warning">
               <FormattedMessage {...messages.end} />
             </Button>
           </div>

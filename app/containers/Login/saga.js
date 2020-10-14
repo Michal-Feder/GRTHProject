@@ -3,7 +3,6 @@ import history from 'utils/history';
 
 import request from 'utils/request';
 
-
 import { 
   LOGIN_LOADED,
 } from '../App/constants';
@@ -32,7 +31,6 @@ export function* login(action) {
     yield put(loginLoadedError(err));
   }
 }
-
 
 export default function* loadData() {
   yield takeLatest(LOGIN_LOADED, login);

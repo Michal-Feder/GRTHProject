@@ -5,10 +5,8 @@ import { Helmet } from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { FormattedMessage } from 'react-intl';
-
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
-
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -62,7 +60,7 @@ export function Login({ onSubmit ,error}) {
               />
             </Group>
             <p>{error}</p>
-            <Button variant="danger" type="submit">
+            <Button variant="warning" type="submit">
               <FormattedMessage {...messages.loginButton} />
             </Button>
           </Form>

@@ -60,7 +60,6 @@ export function* add(action) {
   }
 }
 
-
 export default function* loadData() {
   yield takeEvery(GET_CURRENT_TODAY_ATTENDANCE_OF_USER, getCurrentTodayAttendance);
   yield takeEvery(UPDATE_ATTENDANCE, update);

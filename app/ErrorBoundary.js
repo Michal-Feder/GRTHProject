@@ -12,14 +12,14 @@ function AlertDismissibleExample({error,errorInfo}){
   };
   if (show) {
     return (
-      <Alert variant="danger" onClose={() => setShow(false)} dismissible>
+      <Alert variant="warning" onClose={() => setShow(false)} dismissible>
         <Alert.Heading>Oh snap! You got an error!</Alert.Heading>
         <p>{error}</p>
         <p>{errorInfo}</p>
       </Alert>
     );
   }
-  return <Button variant="danger" onClick={() => setShow(true)}>Show Error</Button>;
+  return <Button variant="warning" onClick={() => setShow(true)}>Show Error</Button>;
 }
 
 class ErrorBoundary extends React.Component {

@@ -1,18 +1,21 @@
 .attendance-registration{
-    .btns{
-        margin-top:5%;
-    }
-    .center{
-      margin-top: 3% ;
-    }
-    .card-header{
-        font-size: large;
-        font-weight: 400;
-        background-color:#343a40 ;
-        color: #f8f9fa;
-    }
-    .card{
-        background-color:#f8f9fa;
-      }
-      
+  color:#343a40 !important;
+  .btns{
+    margin-top:5%;
+  }
+  .center{
+    margin-top: 3% ;
+  }
+  .card-header{
+    font-size: large;
+    font-weight: 400;
+    background-color:#0064ce;
+    color: #f8f9fa;
+  }
+  .card{
+    background-color:#f8f9fa;
+  }
+}
+.react-clock__second-hand__body{
+  background-color: #ffc107;
 }

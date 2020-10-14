@@ -31,8 +31,8 @@ function List(props) {
           </thead>
           <tbody>
             {props.data && props.data.map((item, index) => (
-              <tr key={index.date}>
-                <td className="text-center" >{index}</td>
+              <tr key={Number(index)}>
+                <td className="text-center" >{index+1}</td>
                 <td>{item.date}</td>
                 <td>{item.start}</td>
                 <td>{item.end}</td>
@@ -40,7 +40,6 @@ function List(props) {
             ))}
           </tbody>
         </Table>
-
       </div>
     </div>
   );
@@ -51,5 +50,7 @@ List.propTypes = {
 };
 
 export default compose(
-  memo,errorBoundary)(List);
+  memo,
+  errorBoundary
+)(List);
 
