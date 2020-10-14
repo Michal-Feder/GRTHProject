@@ -33,7 +33,7 @@ export function AttendanceList({ currentUser,attendances,onGetAttendances }) {
       onGetAttendances(currentUser.id);
       setData(attendances);
     }
-  }, [attendances]);
+  }, [attendances!==data]);
 
   const handleCallback=(start, end)=> {
     setData(attendances.filter(item=> Date.parse(item.date) >= Date.parse(new Date(start._d).toDateString()) && Date.parse(item.date) <= Date.parse(new Date(end._d).toDateString())));
