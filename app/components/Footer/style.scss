@@ -1,0 +1,13 @@
+.footer{
+  display: flex;
+  justify-content: space-between;
+  padding: 3em 0 0 0;
+  border-top: 1px solid #666;
+  max-width: calc(1250px + 16px * 2);
+  margin:auto;
+  margin-top: 4%;
+  .icon{
+    height: 2rem;
+    padding-right: 20px;
+  }
+}

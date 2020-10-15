@@ -4,14 +4,15 @@ import { Switch, Route } from 'react-router-dom';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import { useInjectSaga } from 'utils/injectSaga';
+import 'style.scss';
 import errorBoundary from '../../ErrorBoundary';
+import Footer from '../../components/Footer'
 import NotFoundPage from '../NotFoundPage/Loadable';
 import Login from '../Login/Loadable';
 import Navigation from '../Navigation/Loadable';
 import AttendanceList from '../AttendanceList/Loadable';
 import AttendanceRegistration from '../AttendanceRegistration/Loadable';
 import saga from './saga';
-import 'style.scss';
 
 export function App() {
   useInjectSaga({ key: 'app', saga });
@@ -26,6 +27,7 @@ export function App() {
         <Route exact path="/AttendanceList" component={AttendanceList} />
         <Route component={NotFoundPage} />
       </Switch>
+      <Footer/>
     </div>
   );
 }
