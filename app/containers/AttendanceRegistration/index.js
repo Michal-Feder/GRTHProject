@@ -44,7 +44,7 @@ function useInterval(callback, delay) {
   }, [delay]);
 }
 function useTimer() {
-  const [ value, setValue ] = useState(0);
+  const [ value, setValue ] = useState(new Date());
   useInterval(()=> {
     setValue(new Date());
   }, 1000);
