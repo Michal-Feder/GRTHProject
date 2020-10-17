@@ -1,5 +1,5 @@
 
-import React, { memo, useEffect, useState } from 'react';
+import React, { memo, useEffect, useState ,useRef} from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
@@ -23,24 +23,47 @@ import {makeSelectCurrentUser } from '../App/selectors'
 import {makeSelectCurrentTodayAttendance } from './selectors'
 
 const key = 'attendanceRegistration';
+function useInterval(callback, delay) {
+  const savedCallback = useRef();
+
+  // Remember the latest callback.
+  useEffect(() => {
+    savedCallback.current = callback;
+  }, [callback]);
+
+  // Set up the interval.
+  useEffect(() => {
+    function tick() {
+      savedCallback.current();
+    }
+    if (delay !== null) {
+      const id = setInterval(tick, delay);
+      return () => clearInterval(id);
+    }
+    return false;
+  }, [delay]);
+}
+function useTimer() {
+  const [ value, setValue ] = useState(0);
+  useInterval(()=> {
+    setValue(new Date());
+  }, 1000);
+  return value;
+}
 
 export function AttendanceRegistration({
   currentUser, onClickStart, onClickEnd,currentTodayAttendance,onGetCurrentToadayAttendanceOfUser}) {
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
   const {Body,Header} = Card;
-  const [value, setValue] = useState(new Date());
+  const value = useTimer();
   useEffect(() => {
     if (currentUser===false){
       history.push('login');
     }
     else{
-      onGetCurrentToadayAttendanceOfUser(currentUser.id)
-      const interval = setInterval(() => setValue(new Date()), 1000);
-      return () => {
-        clearInterval(interval);
-      }}
-    return false;
+      onGetCurrentToadayAttendanceOfUser(currentUser.id);
+    }
   }, []);
   const userStart = currentTodayAttendance.start!==undefined;
   const userEnd = currentTodayAttendance.end!==undefined;
