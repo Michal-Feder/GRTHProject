@@ -7,6 +7,19 @@ const jsonPathAttendance = `${BASE_DIR}\\data\\data.json`;
 const jsonPathUsers = `${BASE_DIR}\\data\\datausers.json`;
 const bodyParser = require('body-parser');
 
+const mongoose = require('mongoose');
+const { string } = require('prop-types');
+mongoose.connect('mongodb://localhost:27017/attendances', { useNewUrlParser: true });
+const Schema = mongoose.Schema;
+const userSchema = new Schema({ userid: String, name: String, passord: String });
+const dataSchema = new Schema({ userId: String, date: String, start: String, end: String });
+const userModel = mongoose.model("datausers", userSchema);
+const dataModel = mongoose.model("datas", dataSchema);
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function () {
+  console.log('connect to DB');
+});
 router.use(
   bodyParser.urlencoded({
     extended: true,
@@ -20,109 +33,49 @@ router.use((req, res, next) => {
 });
 
 router.get('/getAttendances/:id', (req, res) => {
-  fs.readFile(jsonPathAttendance, 'utf8', (err, data) => {
-    const list = JSON.parse(data);
-    const { id } = req.params;
-    const item = _getItem(list, id);
-    res.end(JSON.stringify(item));
+  const { id } = req.params;
+  var query = { userId: id }
+  dataModel.find(query, function (err, result) {
+    res.send(result);
   });
 });
 
 router.post('/add', (req, res) => {
-  fs.readFile(jsonPathAttendance, 'utf8', (err, data) => {
-    const list = JSON.parse(data);
-    const item = req.body;
-    const newList = _addItem(list, item);
-    const jsonData = JSON.stringify(newList);
-
-    fs.writeFile(jsonPathAttendance, jsonData, writeFileErr => {
-      if (!writeFileErr) {
-        res.end(JSON.stringify(newList[getLastId(newList)]));
-      } else {
-        res.end(data);
-      }
-    });
+  const { userId, date, start } = req.body;
+  dataModel.create({ userId: userId, date: new Date(date).toDateString(), start: new Date(Date(start)).toLocaleTimeString() }, function (err, result) {
+    if (err) console.log(err);
+    const m = { userId: userId, date: new Date().toDateString() }
+      dataModel.findOne(m, function (err, result) {
+      if (err) console.log(err);
+      res.send(result);
+    })
   });
 });
 
 router.put('/update', (req, res) => {
-  fs.readFile(jsonPathAttendance, 'utf8', (err, data) => {
-    const list = JSON.parse(data);
-    const item = req.body;
-    const newList = _updateItem(list, item);
-    const jsonData = JSON.stringify(newList);
-
-    fs.writeFile(jsonPathAttendance, jsonData, writeFileErr => {
-      if (!writeFileErr) {
-        res.end(JSON.stringify(newList[getLastId(newList)]));
-      } else {
-        res.end(data);
-      }
+  const attendance = req.body;
+  dataModel.findByIdAndUpdate(attendance._id,attendance, function (err, result) {
+    if (err) console.log(err);
+    else dataModel.findById(attendance, function (err, result) {
+    if (err) console.log(err);
+    else res.send(result);
     });
   });
 });
 
 router.post('/login', (req, res) => {
-  fs.readFile(jsonPathUsers, 'utf8', (err, data) => {
-    const list = JSON.parse(data);
-    const item = req.body;
-    const isExists = _Login(list, item);
-    res.end(JSON.stringify(isExists));
+  var query = { name: req.body.user.name, password: req.body.user.password }
+  userModel.findOne(query, function (err, result) {
+    res.send(result);
   });
 });
 
 router.get('/getCurrentTodayAttendance/:id', (req, res) => {
-  fs.readFile(jsonPathAttendance, 'utf8', (err, data) => {
-    const attendance = JSON.parse(data);
-    const { id } = req.params;
-    const currentTodayAttendance = _getCurrentTodayAttendance(attendance, id);
-    res.end(JSON.stringify(currentTodayAttendance));
+  const { id } = req.params;
+  var query = { userId: id,date:new Date().toDateString() }
+  dataModel.findOne(query, function (err, result) {
+    res.send(result);
   });
 });
-// Private functions
-const _getItem = (list, id) => {
-  const attendances = list.filter(item => item.userId.toString() === id.toString());
-  return attendances;
-};
-
-const _updateItem = (list, updatedItem) => {
-  const newList = [...list];
-  const currentItemIndex = newList.findIndex(
-    item => item.id.toString() === updatedItem.id.toString(),
-  );
-  newList[currentItemIndex] = updatedItem;
-  return newList;
-};
-
-const getLastId=(list)=>{
-  let lastId = 0;
-  if (list.length > 0) {
-    const id = list[list.length - 1].id.toString();
-    lastId = parseInt(id, 10);
-  }
-  return lastId;
-}
-const _addItem = (list, addedItem) => {
-  let lastId = 0;
-  if (list.length > 0) {
-    const id = list[list.length - 1].id.toString();
-    lastId = parseInt(id, 10);
-  }
-  const item = { id: lastId + 1, ...addedItem };
-  const newList = [...list];
-  newList.push(item);
-  return newList;
-};
-const _Login = (list,checkUser)=>{
-  const currentItemIndex = list.findIndex(
-    user => user.name=== checkUser.user.name&&user.password=== checkUser.user.password
-  );
-  return list[currentItemIndex];
-}
-
-const _getCurrentTodayAttendance = (attendence, id) => {
-  const currentItem = attendence.find(item => item.userId.toString() === id.toString()&&item.date===new Date().toDateString());
-  return currentItem;
-};
 
 module.exports = router;

@@ -18,7 +18,6 @@ export function* get(action) {
   try{
     const attendances = yield call(request, requestURL);
     yield put(getAttendancesByIdSuccess(attendances));
-
   }
   catch(err){  
     console.log('attendance-list-error',err);  }

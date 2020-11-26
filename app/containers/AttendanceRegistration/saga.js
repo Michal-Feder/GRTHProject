@@ -1,4 +1,4 @@
-import { call, put, takeEvery } from 'redux-saga/effects';
+import { call, put, takeLatest } from 'redux-saga/effects';
 
 import request from 'utils/request';
 
@@ -61,7 +61,7 @@ export function* add(action) {
 }
 
 export default function* loadData() {
-  yield takeEvery(GET_CURRENT_TODAY_ATTENDANCE_OF_USER, getCurrentTodayAttendance);
-  yield takeEvery(UPDATE_ATTENDANCE, update);
-  yield takeEvery(ADD_ATTENDANCE, add);
+  yield takeLatest(GET_CURRENT_TODAY_ATTENDANCE_OF_USER, getCurrentTodayAttendance);
+  yield takeLatest(UPDATE_ATTENDANCE, update);
+  yield takeLatest(ADD_ATTENDANCE, add);
 }

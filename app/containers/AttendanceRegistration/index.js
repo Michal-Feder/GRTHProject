@@ -62,7 +62,7 @@ export function AttendanceRegistration({
       history.push('login');
     }
     else{
-      onGetCurrentToadayAttendanceOfUser(currentUser.id);
+      onGetCurrentToadayAttendanceOfUser(currentUser.userid);
     }
   }, []);
   const userStart = currentTodayAttendance.start!==undefined;
@@ -84,7 +84,7 @@ export function AttendanceRegistration({
           <Clock value={value} />
           <div className="btns">
             <Button
-              disabled={!!userStart} onClick={() => onClickStart({id:currentUser.id, value} )} variant="warning">
+              disabled={!!userStart} onClick={() => onClickStart({userid:currentUser.userid, value} )} variant="warning">
               <FormattedMessage {...messages.start} />
             </Button>
             <Button
@@ -113,8 +113,8 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    onClickStart: ({id,value}) => {
-      dispatch(addAttendance({ userId:id, date: new Date().toDateString(), start: new Date(value).toLocaleTimeString(),}))
+    onClickStart: ({userid,value}) => {
+      dispatch(addAttendance({ userId:userid, date: new Date().toDateString(), start: new Date(value).toLocaleTimeString()}))
     },
     onClickEnd: ({currentTodayAttendance,value}) => {
       dispatch(updateAttendance({...currentTodayAttendance,end:new Date(value).toLocaleTimeString()}));

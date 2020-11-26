@@ -30,7 +30,7 @@ export function AttendanceList({ currentUser,attendances,onGetAttendances }) {
       history.push('/Login');
     }
     else{
-      onGetAttendances(currentUser.id);
+      onGetAttendances(currentUser.userid);
       setData(attendances);
     }
   }, [attendances!==data]);
